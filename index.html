@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Semblae Term 3 Map</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#eee;
+    display:flex;
+    justify-content:center;
+    padding-top:40px;
+}
+
+.map{
+    display:grid;
+    grid-template-columns: repeat(6,70px);
+    gap:5px;
+}
+
+.square{
+    width:70px;
+    height:70px;
+    background:#ddd;
+    border:1px solid #999;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.square:hover{
+    background:orange;
+}
+
+.popup{
+    position:absolute;
+    background:rgba(0,0,0,0.75);
+    color:white;
+    padding:12px;
+    border-radius:6px;
+    display:none;
+    width:340px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#4c7db3;
+    padding:6px;
+    text-align:left;
+}
+
+td{
+    background:#cfd6df;
+    padding:6px;
+    color:black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="map" id="map"></div>
+
+<div class="popup" id="popup">
+<h3 id="seat"></h3>
+<div id="regions"></div>
+
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>Total Votes</th>
+<th>Percent</th>
+</tr>
+</thead>
+
+<tbody id="results"></tbody>
+</table>
+</div>
+
+<script>
+
+const mapData = {
+
+A:{seat:"Sexual and gender minorities 1",p:"2 of 2 Regions Reporting",results:[["Candidate 1",5000,"100%"],["Candidate 2",3000,"0%"]]},
+B:{seat:"Sexual and gender minorities 2",p:"2 of 2 Regions Reporting",results:[["Candidate 2",3400,"100%"]]},
+C:{seat:"The Secretariats",p:"2 of 2 Regions Reporting",results:[["Candidate 1",1,"50%"],["Candidate 2",1,"50%"],["Candidate 3",0,"0%"]]},
+D:{seat:"AI Development Members Association 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4500,"58%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3300,"42%"]]},
+E:{seat:"AI Development Members Association 2",p:"4 of 4 Regions Reporting",results:[["Candidate 1",3900,"52%"],["Candidate 2",1,"50%"],["Candidate 2",3600,"48%"]]},
+F:{seat:"AI Development Members Association 3",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4700,"60%"],["Candidate 2",3100,"40%"]]},
+G:{seat:"AI Development Members Association 4",p:"4 of 4 Regions Reporting",results:[["Candidate 2",3000,"37%"]]},
+H:{seat:"Philosophy Semblæ Area 1",p:"3 of 3 Regions Reporting",results:[["Candidate 1",4200,"54%"],["Candidate 2",1,"50%"],["Candidate 2",3600,"46%"]]},
+I:{seat:"Philosophy Semblæ Area 2",p:"3 of 3 Regions Reporting",results:[["Candidate 1",5500,"66%"],["Candidate 2",2800,"34%"]]},
+J:{seat:"Philosophy Semblæ Area 3",p:"3 of 3 Regions Reporting",results:[["Candidate 2",3200,"43%"]]},
+K:{seat:"Philosophy Semblæ Area 4",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
+L:{seat:"Minority Semblæ Area 1",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
+M:{seat:"Minority Semblæ Area 2",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
+N:{seat:"Doanket 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",3400,"44%"]]},
+O:{seat:"Doanket 2",p:"4 of 4 Regions Reporting",results:[["Candidate 2",3000,"38%"]]},
+P:{seat:"Doanket 3",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
+Q:{seat:"Podes",p:"3 of 3 Regions Reporting",results:[["ceelinder",2600,"100%"]]},
+R:{seat:"Level 2 Militia Council 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4700,"60%"],["Candidate 2",1,"50%"],["Candidate 2",3100,"40%"]]},
+S:{seat:"Level 2 Militia Council 2",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4500,"58%"],["Candidate 2",3300,"42%"]]},
+T:{seat:"Level 2 Militia Council 3",p:"4 of 4 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
+U:{seat:"Level 2 Militia Council 4",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
+V:{seat:"Everyone 1",p:"9 of 9 Regions Reporting",results:[["Candidate 1",4800,"61%"],["Candidate 2",3100,"39%"]]},
+W:{seat:"Everyone 2",p:"9 of 9 Regions Reporting",results:[["Candidate 1",4600,"59%"],["Candidate 2",3200,"41%"]]},
+X:{seat:"Everyone 3",p:"9 of 9 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",3400,"44%"]]},
+Y:{seat:"Everyone 4",p:"9 of 9 Regions Reporting",results:[["Candidate 1",5100,"63%"],["Candidate 2",3000,"37%"]]},
+Z:{seat:"Everyone 5",p:"9 of 9 Regions Reporting",results:[["Candidate 1",4700,"60%"],["Candidate 2",3100,"40%"]]}
+
+};
+
+const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const map=document.getElementById("map");
+const popup=document.getElementById("popup");
+
+for(let i=0;i<26;i++){
+
+const sq=document.createElement("div");
+sq.className="square";
+sq.dataset.id=letters[i];
+
+sq.addEventListener("mousemove",e=>{
+
+const data=mapData[sq.dataset.id];
+
+popup.style.display="block";
+popup.style.left=e.pageX+15+"px";
+popup.style.top=e.pageY+15+"px";
+
+document.getElementById("seat").innerText="Contest Summary for "+data.seat;
+document.getElementById("regions").innerText=data.p;
+
+const tbody=document.getElementById("results");
+tbody.innerHTML="";
+
+data.results.forEach(r=>{
+tbody.innerHTML+=`
+<tr>
+<td>${r[0]}</td>
+<td>${r[1].toLocaleString()}</td>
+<td>${r[2]}</td>
+</tr>`;
+});
+
+});
+
+sq.addEventListener("mouseleave",()=>popup.style.display="none");
+
+map.appendChild(sq);
+
+}
+
+</script>
+
+</body>
+</html>
