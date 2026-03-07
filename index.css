@@ -1,8 +1,13 @@
-body {
-  .newspaper h1 {
+.newspaper h1 {
     font-size: 48px;
     text-align: center;
     letter-spacing: 2px;
     margin-bottom: 10px;
     text-transform: uppercase;
+}
+.newspaper h2 {
+    column-span: all;
+    font-size: 28px;
+    margin-top: 30px;
+    border-bottom: 1px solid #000;
 }
