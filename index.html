@@ -68,7 +68,7 @@ td{
 <body>
     <div class="newspaper">
         <h1>Semblæ</h1>
-        <div class="meta">April 30, 2026 · Term 3<br>Election date: 1-5/4/2026<br/></div>
+        <div class="meta">April 30, 2026 · Term 3<br>Election date: 1-5/4/2026 (Early vote: 16-17/3/2026)<br/></div>
 
 <div class="map" id="map"></div>
 
@@ -108,17 +108,17 @@ L:{seat:"Minority Semblæ Area 1",p:"0 of 0 Regions Reporting",results:[["Vacant
 M:{seat:"Minority Semblæ Area 2",p:"0 of 0 Regions Reporting",results:[["Vacant",0,"100%"]]},
 N:{seat:"Doanket 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4500,"58%"],["Candidate 2",1,"50%"],["Candidate 2",3300,"42%"]]},
 O:{seat:"Doanket 2",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",3400,"44%"]]},
-P:{seat:"Doanket 3",p:"4 of 4 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-Q:{seat:"Podes",p:"3 of 3 Regions Reporting",results:[["ceelinder",2600,"100%"]]},
-R:{seat:"Level 2 Militia Council 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4700,"60%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3100,"40%"]]},
-S:{seat:"Level 2 Militia Council 2",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4500,"58%"],["Candidate 2",1,"50%"],["Candidate 2",3300,"42%"]]},
-T:{seat:"Level 2 Militia Council 3",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",3400,"44%"]]},
-U:{seat:"Level 2 Militia Council 4",p:"4 of 4 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-V:{seat:"Everyone 1",p:"9 of 9 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-W:{seat:"Everyone 2",p:"9 of 9 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-X:{seat:"Everyone 3",p:"9 of 9 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-Y:{seat:"Everyone 4",p:"9 of 9 Regions Reporting",results:[["Candidate 2",2800,"100%"]]},
-Z:{seat:"Everyone 5",p:"9 of 9 Regions Reporting",results:[["Candidate 2",2800,"100%"]]}
+P:{seat:"Doanket 3",p:"4 of 4 Regions Reporting | Electoral college",results:[["Candidate 2",2800,"100%"]]},
+Q:{seat:"Podes",p:"3 of 3 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",3400,"44%"]]},
+R:{seat:"Level 2 Militia Council 1",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4700,"60%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3100,"40%"]]},
+S:{seat:"Level 2 Militia Council 2",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4500,"58%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3300,"42%"]]},
+T:{seat:"Level 2 Militia Council 3",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3400,"44%"]]},
+U:{seat:"Level 2 Militia Council 4",p:"4 of 4 Regions Reporting",results:[["Candidate 1",4400,"56%"],["Candidate 2",1,"50%"],["Candidate 2",1,"50%"],["Candidate 2",3400,"44%"]]},
+V:{seat:"Everyone 1",p:"9 of 9 Regions Reporting | Party-list proportional representation",results:[["Candidate 2",2800,"100%"]]},
+W:{seat:"Everyone 2",p:"9 of 9 Regions Reporting | Party-list proportional representation",results:[["Candidate 2",2800,"100%"]]},
+X:{seat:"Everyone 3",p:"9 of 9 Regions Reporting | Party-list proportional representation",results:[["Candidate 2",2800,"100%"]]},
+Y:{seat:"Everyone 4",p:"9 of 9 Regions Reporting | Party-list proportional representation",results:[["Candidate 2",2800,"100%"]]},
+Z:{seat:"Everyone 5",p:"9 of 9 Regions Reporting | Party-list proportional representation",results:[["Candidate 2",2800,"100%"]]}
 
 };
 
@@ -140,7 +140,7 @@ popup.style.display="block";
 popup.style.left=e.pageX+15+"px";
 popup.style.top=e.pageY+15+"px";
 
-document.getElementById("seat").innerText="Contest Summary for "+data.seat;
+    document.getElementById("seat").innerText="Results for "+data.seat;
 document.getElementById("regions").innerText=data.p;
 
 const tbody=document.getElementById("results");
